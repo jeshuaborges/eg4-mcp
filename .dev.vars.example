@@ -1,0 +1,4 @@
+# Copy to .dev.vars for `npm run dev`. Never commit .dev.vars.
+PUBLIC_BASE_URL=http://localhost:8787
+# Generate with: openssl rand -base64 32
+EG4_CACHE_KEY=

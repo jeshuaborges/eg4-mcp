@@ -1,0 +1,2334 @@
+[
+ {
+  "id": "timeInput",
+  "kind": "hold",
+  "label": "Time",
+  "name": "HOLD_TIME",
+  "placeholder": "yyyy-MM-dd HH:mm:ss",
+  "tag": "INPUT",
+  "tip": "When the inverter is online, the Time is based on the set Time Zone. Please go to the Configuration/Station/Station Management/Edit page to set Time Zone and daylight saving time."
+ },
+ {
+  "id": "fwCodeInput",
+  "kind": "hold",
+  "label": "Firmware version",
+  "name": "HOLD_FW_CODE",
+  "tag": "INPUT",
+  "tip": "Firmware/LCD version of the inverter."
+ },
+ {
+  "id": "lcdVersionInput",
+  "kind": "hold",
+  "label": "Firmware version",
+  "name": "HOLD_LCD_VERSION",
+  "tag": "INPUT",
+  "tip": "Firmware/LCD version of the inverter."
+ },
+ {
+  "id": "maxAcInputPowerInput",
+  "kind": "hold",
+  "label": "Max. AC Input Power(kW)",
+  "max": "6553.5",
+  "min": "0",
+  "name": "HOLD_MAX_AC_INPUT_POWER",
+  "placeholder": "[0, 6553.5]",
+  "tag": "INPUT",
+  "tip": "The maximum amount of power to be imported from the grid. And battery charging power will be adjusted based on Load consumption and grid import limitation."
+ },
+ {
+  "id": "lcdTypeInput",
+  "kind": "bit",
+  "label": "LCD Type",
+  "name": "BIT_LCD_TYPE",
+  "options": [
+   "0=0: FlexBOSS External Display",
+   "1=1: LCD Screen Kit"
+  ],
+  "tag": "SELECT",
+  "tip": "Please restart the inverter after changing the LCD Type setting to take effect."
+ },
+ {
+  "id": "maxBackFlowInput",
+  "kind": "hold",
+  "label": "Grid Sell Back Power(kW)",
+  "max": "25.5",
+  "name": "HOLD_FEED_IN_GRID_POWER_PERCENT",
+  "placeholder": "[0, 25.5]",
+  "tag": "INPUT",
+  "tip": "If Grid Sell Back function is enabled, you can adjust the power limitation to feed into the grid."
+ },
+ {
+  "id": "setMasterOrSlaveInput",
+  "kind": "hold",
+  "label": "Set System Type",
+  "name": "HOLD_SET_MASTER_OR_SLAVE",
+  "options": [
+   "1=1 Phase Master",
+   "2=Slave",
+   "3=3 Phase Master",
+   "4=2x208 Master"
+  ],
+  "tag": "SELECT",
+  "tip": "Used when paralleling inverters. It can only be set in standby mode or fault state."
+ },
+ {
+  "id": "setComposedPhaseInput",
+  "kind": "hold",
+  "label": "Set Composed Phase",
+  "name": "HOLD_SET_COMPOSED_PHASE",
+  "options": [
+   "1=Phase A/B",
+   "2=Phase B/C",
+   "3=Phase C/A"
+  ],
+  "tag": "SELECT",
+  "tip": "Used to set EPS phase if not set automatically. It can only be set in standby mode or fault."
+ },
+ {
+  "id": "measurementModelInput",
+  "kind": "modelBit",
+  "label": "Measurement",
+  "name": "MODEL_BIT_MEASUREMENT",
+  "options": [
+   "0=0: Meter",
+   "1=1: CT"
+  ],
+  "tag": "SELECT",
+  "tip": "Determines whether or not you are using CTs or a Smart Meter to measure AC input."
+ },
+ {
+  "id": "meterBrandModelInput",
+  "kind": "modelBit",
+  "label": "Meter Brand",
+  "name": "MODEL_BIT_METER_BRAND",
+  "options": [
+   "0=0: Eastron",
+   "1=1: WattNode",
+   "2=2: Rsvd",
+   "3=3: Chint"
+  ],
+  "tag": "SELECT",
+  "tip": ""
+ },
+ {
+  "id": "meterTypeModelInput",
+  "kind": "modelBit",
+  "label": "Meter Type",
+  "name": "MODEL_BIT_METER_TYPE",
+  "options": [
+   "0=0: 1 Phase Meter",
+   "1=1: 3 Phase Meter"
+  ],
+  "tag": "SELECT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "CT A Amps(A)",
+  "max": "6000",
+  "min": "0",
+  "name": "_12K_HOLD_WATT_NODE_CT_AMPS_A",
+  "placeholder": "[0, 6000]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "CT B Amps(A)",
+  "max": "6000",
+  "min": "0",
+  "name": "_12K_HOLD_WATT_NODE_CT_AMPS_B",
+  "placeholder": "[0, 6000]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "CT C Amps(A)",
+  "max": "6000",
+  "min": "0",
+  "name": "_12K_HOLD_WATT_NODE_CT_AMPS_C",
+  "placeholder": "[0, 6000]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "ctSampleRatioInput",
+  "kind": "bit",
+  "label": "CT Sample Ratio",
+  "name": "BIT_CT_SAMPLE_RATIO",
+  "options": [
+   "0=1/1000",
+   "1=1/3000",
+   "2=1/2000",
+   "3=1/4000",
+   "4=1/6000"
+  ],
+  "tag": "SELECT",
+  "tip": "Sample Ratio of the CTs being used."
+ },
+ {
+  "id": "meterPortReuseTypeInput",
+  "kind": "bit",
+  "label": "Meter Port Reuse",
+  "name": "BIT_METER_PORT_REUSE_TYPE",
+  "options": [
+   "0=Default",
+   "1=AC couple"
+  ],
+  "tag": "SELECT",
+  "tip": "When the grid side detection method is CT, it takes effect. After setting it to 1, it will start communicating with the meter and consider the collected power as the power of the ACcouple"
+ },
+ {
+  "id": "ctPowerOffsetInput",
+  "kind": "hold",
+  "label": "CT Power Offset(W)\n\t\t\t\t\n\t\t\t\t(?)",
+  "max": "1000",
+  "min": "-1000",
+  "name": "HOLD_CT_POWER_OFFSET",
+  "placeholder": "[-1000, 1000]",
+  "tag": "INPUT",
+  "tip": "Reduce the importing power or exporting power while working in on-grid mode."
+ },
+ {
+  "id": "meterRs485ReuseInput",
+  "kind": "bit",
+  "label": "Meter RS485 Reuse",
+  "name": "BIT_METER_PORT_REUSE_TYPE",
+  "options": [
+   "0=0: MODBUS communication",
+   "3=3: Production meter"
+  ],
+  "tag": "SELECT",
+  "tip": ""
+ },
+ {
+  "id": "pvInputModeInput",
+  "kind": "hold",
+  "label": "PV Input Mode",
+  "name": "HOLD_PV_INPUT_MODE",
+  "options": [
+   "0=0: NO PV",
+   "1=1: PV1 in",
+   "2=2: PV2 in",
+   "3=3: PV3 in",
+   "4=4: PV1&2 in",
+   "5=5: PV1&3 in",
+   "6=6: PV2&3 in",
+   "7=7: PV1&2&3 in"
+  ],
+  "tag": "SELECT",
+  "tip": "Determines which MPPTs are being used."
+ },
+ {
+  "id": "startPvVoltInput",
+  "kind": "hold",
+  "label": "Start PV Volt(V)",
+  "max": "370",
+  "min": "90",
+  "name": "HOLD_START_PV_VOLT",
+  "placeholder": "[90, 370]",
+  "tag": "INPUT",
+  "tip": "The starting voltage for PV to get to work"
+ },
+ {
+  "id": "acChargePower",
+  "kind": "hold",
+  "label": "AC Charge Power(kW)",
+  "max": "25.5",
+  "min": "0",
+  "name": "HOLD_AC_CHARGE_POWER_CMD",
+  "placeholder": "[0, 25.5]",
+  "tag": "INPUT",
+  "tip": "Allows for the use of maximum AC power to charge the batteries."
+ },
+ {
+  "id": "acChgSOCLimitInput",
+  "kind": "hold",
+  "label": "Backup SOC(%)",
+  "max": "100",
+  "name": "HOLD_AC_CHARGE_SOC_LIMIT",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": "Set the max. SOC for backup. This parameter is the same as Stop AC Charge SOC."
+ },
+ {
+  "id": "stopAcChgVoltInput",
+  "kind": "hold",
+  "label": "Backup Volt(V)",
+  "max": "59",
+  "min": "42",
+  "name": "HOLD_AC_CHARGE_END_BATTERY_VOLTAGE",
+  "placeholder": "[42, 59]",
+  "tag": "INPUT",
+  "tip": "Set the maximum Voltage for backup.This parameter is the same as Stop AC Charge Volt."
+ },
+ {
+  "id": "acChgStartHourInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": null,
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "acChgStartMinuteInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": null,
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "acChgEndHourInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": null,
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "acChgEndMinuteInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": null,
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "gridPeakShavingPower",
+  "kind": "hold",
+  "label": "",
+  "max": "25.5",
+  "min": "0",
+  "name": "_12K_HOLD_GRID_PEAK_SHAVING_POWER",
+  "placeholder": "[0, 25.5]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "startPeakShavingVolt",
+  "kind": "hold",
+  "label": "",
+  "max": "59",
+  "min": "40",
+  "name": "_12K_HOLD_GRID_PEAK_SHAVING_VOLT",
+  "placeholder": "[40, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "startPeakShavingSOC",
+  "kind": "hold",
+  "label": "",
+  "max": "100",
+  "min": "0",
+  "name": "_12K_HOLD_GRID_PEAK_SHAVING_SOC",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "peakShavingStartHourInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "LSP_HOLD_DIS_CHG_POWER_TIME_37",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "peakShavingStartMinuteInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "LSP_HOLD_DIS_CHG_POWER_TIME_38",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "peakShavingEndHourInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "LSP_HOLD_DIS_CHG_POWER_TIME_39",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "peakShavingEndMinuteInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "LSP_HOLD_DIS_CHG_POWER_TIME_40",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "gridPeakShavingPower2",
+  "kind": "hold",
+  "label": "",
+  "max": "25.5",
+  "min": "0",
+  "name": "_12K_HOLD_GRID_PEAK_SHAVING_POWER_2",
+  "placeholder": "[0, 25.5]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "startPeakShavingVolt2",
+  "kind": "hold",
+  "label": "",
+  "max": "59",
+  "min": "40",
+  "name": "_12K_HOLD_GRID_PEAK_SHAVING_VOLT_2",
+  "placeholder": "[40, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "startPeakShavingSOC2",
+  "kind": "hold",
+  "label": "",
+  "max": "100",
+  "min": "0",
+  "name": "_12K_HOLD_GRID_PEAK_SHAVING_SOC_2",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "peakShavingStartHourInput1",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "LSP_HOLD_DIS_CHG_POWER_TIME_41",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "peakShavingStartMinuteInput1",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "LSP_HOLD_DIS_CHG_POWER_TIME_42",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "peakShavingEndHourInput1",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "LSP_HOLD_DIS_CHG_POWER_TIME_43",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "peakShavingEndMinuteInput1",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "LSP_HOLD_DIS_CHG_POWER_TIME_44",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "acChargePower",
+  "kind": "hold",
+  "label": "AC Charge Power 2(kW)",
+  "max": "25.5",
+  "min": "0",
+  "name": "HOLD_AC_CHARGE_POWER_CMD_1",
+  "placeholder": "[0, 25.5]",
+  "tag": "INPUT",
+  "tip": "The max. charging power from the grid."
+ },
+ {
+  "id": "acChargePower",
+  "kind": "hold",
+  "label": "AC Charge Power 3(kW)",
+  "max": "25.5",
+  "min": "0",
+  "name": "HOLD_AC_CHARGE_POWER_CMD_2",
+  "placeholder": "[0, 25.5]",
+  "tag": "INPUT",
+  "tip": "The max. charging power from the grid."
+ },
+ {
+  "id": "acChargeTypeInput",
+  "kind": "bit",
+  "label": "AC Charge Based On",
+  "name": "BIT_AC_CHARGE_TYPE",
+  "options": [
+   "0=Time (According to)",
+   "1=SOC/Volt (According to)",
+   "2=Time+SOC/Volt (According to)"
+  ],
+  "tag": "SELECT",
+  "tip": "According to time: Set a preferred time period to charge the battery.According to SOC/Voltage: Set AC to charge the battery when the SOC/ voltage drops to the set threshold."
+ },
+ {
+  "id": "acChgBatCurrentInput",
+  "kind": "hold",
+  "label": "AC Charge Battery Current(A)",
+  "max": "150",
+  "name": "HOLD_AC_CHARGE_BATTERY_CURRENT",
+  "placeholder": "[0, 125]",
+  "tag": "INPUT",
+  "tip": "Set it according to battery requirement."
+ },
+ {
+  "id": "startAcChgSOCInput",
+  "kind": "hold",
+  "label": "Start AC Charge SOC(%)\n            Start AC Charge SOC 1(%)",
+  "max": "100",
+  "min": "0",
+  "name": "HOLD_AC_CHARGE_START_BATTERY_SOC",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": "During any AC charge time period, enters AC charge mode when SOC below the start SOC"
+ },
+ {
+  "id": "startAcChgVoltInput",
+  "kind": "hold",
+  "label": "Start AC Charge Volt(V)\n            Start AC Charge Volt 1(V)",
+  "max": "57",
+  "min": "40",
+  "name": "HOLD_AC_CHARGE_START_BATTERY_VOLTAGE",
+  "placeholder": "[40, 57]",
+  "tag": "INPUT",
+  "tip": "During any AC charge time period, enters AC charge mode when Voltage below the start Volt"
+ },
+ {
+  "id": "startAcChgSOCInput",
+  "kind": "hold",
+  "label": "Start AC Charge SOC 2(%)",
+  "max": "59",
+  "min": "42",
+  "name": "HOLD_AC_CHARGE_START_BATTERY_SOC_1",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": "During any AC charge time period, enters AC charge mode when SOC below the start SOC"
+ },
+ {
+  "id": "acChgSOCLimitInput1",
+  "kind": "hold",
+  "label": "Stop AC Charge SOC 2(%)",
+  "max": "100",
+  "name": "HOLD_AC_CHARGE_SOC_LIMIT_1",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": "Exits AC charge mode when SOC higher than the stop SOC"
+ },
+ {
+  "id": "startAcChgVoltInput1",
+  "kind": "hold",
+  "label": "Start AC Charge Volt 2(V)",
+  "max": "57",
+  "min": "40",
+  "name": "HOLD_AC_CHARGE_START_BATTERY_VOLTAGE_1",
+  "placeholder": "[40, 57]",
+  "tag": "INPUT",
+  "tip": "During any AC charge time period, enters AC charge mode when Voltage below the start Volt"
+ },
+ {
+  "id": "stopAcChgVoltInput1",
+  "kind": "hold",
+  "label": "Stop AC Charge Volt 2(V)",
+  "max": "59",
+  "min": "42",
+  "name": "HOLD_AC_CHARGE_END_BATTERY_VOLTAGE_1",
+  "placeholder": "[42, 59]",
+  "tag": "INPUT",
+  "tip": "Exits AC charge mode when Voltage higher than the stop Volt"
+ },
+ {
+  "id": "startAcChgSOCInput2",
+  "kind": "hold",
+  "label": "Start AC Charge SOC 3(%)",
+  "max": "100",
+  "min": "0",
+  "name": "HOLD_AC_CHARGE_START_BATTERY_SOC_2",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": "During any AC charge time period, enters AC charge mode when SOC below the start SOC"
+ },
+ {
+  "id": "acChgSOCLimitInput2",
+  "kind": "hold",
+  "label": "Stop AC Charge SOC 3(%)",
+  "max": "100",
+  "name": "HOLD_AC_CHARGE_SOC_LIMIT_2",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": "Exits AC charge mode when SOC higher than the stop SOC"
+ },
+ {
+  "id": "startAcChgVoltInput2",
+  "kind": "hold",
+  "label": "Start AC Charge Volt 3(V)",
+  "max": "57",
+  "min": "40",
+  "name": "HOLD_AC_CHARGE_START_BATTERY_VOLTAGE_2",
+  "placeholder": "[40, 57]",
+  "tag": "INPUT",
+  "tip": "During any AC charge time period, enters AC charge mode when Voltage below the start Volt"
+ },
+ {
+  "id": "stopAcChgVoltInput2",
+  "kind": "hold",
+  "label": "Stop AC Charge Volt 3(V)",
+  "max": "59",
+  "min": "42",
+  "name": "HOLD_AC_CHARGE_END_BATTERY_VOLTAGE_2",
+  "placeholder": "[42, 59]",
+  "tag": "INPUT",
+  "tip": "Exits AC charge mode when Voltage higher than the stop Volt"
+ },
+ {
+  "id": "acChgStartHourInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_AC_CHARGE_START_HOUR",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "acChgStartMinuteInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_AC_CHARGE_START_MINUTE",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "acChgEndHourInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_AC_CHARGE_END_HOUR",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "acChgEndMinuteInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_AC_CHARGE_END_MINUTE",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "acChgStartHourInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_AC_CHARGE_START_HOUR_1",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "acChgStartMinuteInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_AC_CHARGE_START_MINUTE_1",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "acChgEndHourInput1",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_AC_CHARGE_END_HOUR_1",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "acChgEndMinuteInput1",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_AC_CHARGE_END_MINUTE_1",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "acChgStartHourInput2",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_AC_CHARGE_START_HOUR_2",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "acChgStartMinuteInput2",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_AC_CHARGE_START_MINUTE_2",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "acChgEndHourInput2",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_AC_CHARGE_END_HOUR_2",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "acChgEndMinuteInput2",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_AC_CHARGE_END_MINUTE_2",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "acChargePower2",
+  "kind": "hold",
+  "label": "AC Charge Power(kW)\n            AC Charge Power 1(kW)",
+  "max": "25.5",
+  "min": "0",
+  "name": "HOLD_AC_CHARGE_POWER_CMD",
+  "placeholder": "[0, 25.5]",
+  "tag": "INPUT",
+  "tip": "The max. charging power from the grid."
+ },
+ {
+  "id": "acChargePower2",
+  "kind": "hold",
+  "label": "AC Charge Power 2(kW)",
+  "max": "25.5",
+  "min": "0",
+  "name": "HOLD_AC_CHARGE_POWER_CMD_1",
+  "placeholder": "[0, 25.5]",
+  "tag": "INPUT",
+  "tip": "The max. charging power from the grid."
+ },
+ {
+  "id": "acChargePower2",
+  "kind": "hold",
+  "label": "AC Charge Power 3(kW)",
+  "max": "25.5",
+  "min": "0",
+  "name": "HOLD_AC_CHARGE_POWER_CMD_2",
+  "placeholder": "[0, 25.5]",
+  "tag": "INPUT",
+  "tip": "The max. charging power from the grid."
+ },
+ {
+  "id": "startAcChgSOCInput1",
+  "kind": "hold",
+  "label": "Start AC Charge SOC 2(%)",
+  "min": "0",
+  "name": "HOLD_AC_CHARGE_START_BATTERY_SOC_1",
+  "placeholder": "[0, 90]",
+  "tag": "INPUT",
+  "tip": "During any AC charge time period, enters AC charge mode when SOC below the start SOC"
+ },
+ {
+  "id": "forcedChgPowerCMDInput",
+  "kind": "hold",
+  "label": "PV Charge Power(kW)\n                    \n\t\t\t\t\n                \n                \n                     \n                         PV Charge Power 1(kW)",
+  "max": "25.5",
+  "min": "0",
+  "name": "HOLD_FORCED_CHG_POWER_CMD",
+  "placeholder": "[0, 25.5]",
+  "tag": "INPUT",
+  "tip": "The max. charging power from PV."
+ },
+ {
+  "id": "forcedChgSOCLimitInput",
+  "kind": "hold",
+  "label": "PV Charge Priority Stop SOC(%)\n                    \n                    \n                \n                \n                     \n                         PV Charge Priority Stop SOC 1(%)",
+  "max": "100",
+  "min": "0",
+  "name": "HOLD_FORCED_CHG_SOC_LIMIT",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": "SOC at which you would like the batteries to stop charging in this working mode."
+ },
+ {
+  "id": "chargeFirstVoltInput",
+  "kind": "hold",
+  "label": "PV Charge Priority Stop Volt(V)\n                    \n                \n                \n                \n                     \n                         PV Charge Priority Stop Volt 1(V)",
+  "max": "59",
+  "min": "48",
+  "name": "_12K_HOLD_CHARGE_FIRST_VOLT",
+  "placeholder": "[48, 59]",
+  "tag": "INPUT",
+  "tip": "Voltage at which you would like the batteries to stop charging."
+ },
+ {
+  "id": "forcedChgPowerCMDInput",
+  "kind": "hold",
+  "label": "PV Charge Power 2(kW)",
+  "max": "25.5",
+  "min": "0",
+  "name": "HOLD_FORCED_CHG_POWER_CMD_1",
+  "placeholder": "[0, 25.5]",
+  "tag": "INPUT",
+  "tip": "The max. charging power from PV."
+ },
+ {
+  "id": "forcedChgSOCLimitInput",
+  "kind": "hold",
+  "label": "PV Charge Priority Stop SOC 2(%)",
+  "max": "100",
+  "min": "0",
+  "name": "HOLD_FORCED_CHG_SOC_LIMIT_1",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": "SOC at which you would like the batteries to stop charging in this working mode."
+ },
+ {
+  "id": "chargeFirstVoltInput",
+  "kind": "hold",
+  "label": "PV Charge Priority Stop Volt 2(V)",
+  "max": "59.5",
+  "min": "48",
+  "name": "_12K_HOLD_CHARGE_FIRST_VOLT_1",
+  "placeholder": "[48, 59.5]",
+  "tag": "INPUT",
+  "tip": "Voltage at which you would like the batteries to stop charging."
+ },
+ {
+  "id": "forcedChgPowerCMDInput",
+  "kind": "hold",
+  "label": "PV Charge Power 3(kW)",
+  "max": "25.5",
+  "min": "0",
+  "name": "HOLD_FORCED_CHG_POWER_CMD_2",
+  "placeholder": "[0, 25.5]",
+  "tag": "INPUT",
+  "tip": "The max. charging power from PV."
+ },
+ {
+  "id": "forcedChgSOCLimitInput",
+  "kind": "hold",
+  "label": "PV Charge Priority Stop SOC 3(%)",
+  "max": "100",
+  "min": "0",
+  "name": "HOLD_FORCED_CHG_SOC_LIMIT_2",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": "SOC at which you would like the batteries to stop charging in this working mode."
+ },
+ {
+  "id": "chargeFirstVoltInput",
+  "kind": "hold",
+  "label": "PV Charge Priority Stop Volt 3(V)",
+  "max": "59.5",
+  "min": "48",
+  "name": "_12K_HOLD_CHARGE_FIRST_VOLT_2",
+  "placeholder": "[48, 59.5]",
+  "tag": "INPUT",
+  "tip": "Voltage at which you would like the batteries to stop charging."
+ },
+ {
+  "id": "forcedChgStartHourInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_CHARGE_START_HOUR",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedChgStartMinuteInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_CHARGE_START_MINUTE",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedChgEndHourInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_CHARGE_END_HOUR",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedChgEndMinuteInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_CHARGE_END_MINUTE",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedChgStartHourInput1",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_CHARGE_START_HOUR_1",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedChgStartMinuteInput1",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_CHARGE_START_MINUTE_1",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedChgEndHourInput1",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_CHARGE_END_HOUR_1",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedChgEndMinuteInput1",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_CHARGE_END_MINUTE_1",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedChgStartHourInput2",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_CHARGE_START_HOUR_2",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedChgStartMinuteInput2",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_CHARGE_START_MINUTE_2",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedChgEndHourInput2",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_CHARGE_END_HOUR_2",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedChgEndMinuteInput2",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_CHARGE_END_MINUTE_2",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedDisChgPowerCMDInput",
+  "kind": "hold",
+  "label": "Forced Discharge Power 1(kW)",
+  "max": "25.5",
+  "min": "0",
+  "name": "HOLD_FORCED_DISCHG_POWER_CMD",
+  "placeholder": "[0, 25.5]",
+  "tag": "INPUT",
+  "tip": "The amount of power to Forcably Discharge from batteries."
+ },
+ {
+  "id": "forcedDisChgSOCLimitInput",
+  "kind": "hold",
+  "label": "Stop Discharge SOC 1(%)",
+  "min": "0",
+  "name": "HOLD_FORCED_DISCHG_SOC_LIMIT",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": "SOC at which the inverter should stop Forcably Discharging from the batteries."
+ },
+ {
+  "id": "stopDischgVoltInput",
+  "kind": "hold",
+  "label": "Stop Discharge Volt 1(V)",
+  "max": "56",
+  "min": "40",
+  "name": "_12K_HOLD_STOP_DISCHG_VOLT",
+  "placeholder": "[40, 56]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedDisChgStartHourInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_DISCHARGE_START_HOUR",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedDisChgStartMinuteInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_DISCHARGE_START_MINUTE",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedDisChgEndHourInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_DISCHARGE_END_HOUR",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedDisChgEndMinuteInput",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_DISCHARGE_END_MINUTE",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedDisChgStartHourInput1",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_DISCHARGE_START_HOUR_1",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedDisChgStartMinuteInput1",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_DISCHARGE_START_MINUTE_1",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedDisChgEndHourInput1",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_DISCHARGE_END_HOUR_1",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedDisChgEndMinuteInput1",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_DISCHARGE_END_MINUTE_1",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedDisChgStartHourInput2",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_DISCHARGE_START_HOUR_2",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedDisChgStartMinuteInput2",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_DISCHARGE_START_MINUTE_2",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedDisChgEndHourInput2",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_DISCHARGE_END_HOUR_2",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "forcedDisChgEndMinuteInput2",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_FORCED_DISCHARGE_END_MINUTE_2",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "batteryTypeModelInput",
+  "kind": "modelBit",
+  "label": "Battery Type",
+  "name": "MODEL_BIT_BATTERY_TYPE",
+  "options": [
+   "0=0: No battery",
+   "1=1: Lead-acid",
+   "2=2: Lithium"
+  ],
+  "tag": "SELECT",
+  "tip": "Choose the battery type and then select Lithium Brand (for closed-loop communications), \nor battery capacity for lead-acid/lithium batteries with no communications. \nPlease note after setting the battery type, all other settings will reset to default."
+ },
+ {
+  "id": "lithiumTypeModelInput",
+  "kind": "modelBit",
+  "label": "Lithium Brand / No comms",
+  "name": "MODEL_BIT_LITHIUM_TYPE",
+  "options": [
+   "0=0: EG4",
+   "1=1: EG4 Advanced",
+   "2=2",
+   "3=3",
+   "5=5",
+   "6=6",
+   "8=8",
+   "11=11",
+   "14=14",
+   "18=18",
+   "19=19",
+   "20=20",
+   "21=21",
+   "22=22: BRIGGS",
+   "28=28",
+   "30=30: Lithium no comms: 15 cells in series",
+   "31=31: Lithium no comms: 16 cells in series"
+  ],
+  "tag": "SELECT",
+  "tip": "Brand of compatible Lithium Batteries being used."
+ },
+ {
+  "id": "batConnectSettingInput",
+  "kind": "bit",
+  "label": "BAT Connect Setting",
+  "name": "BIT_BAT_CONNECT_SETTING",
+  "options": [
+   "0=0: Only Bat1",
+   "1=1: Only Bat2",
+   "2=2:BAT1 BAT2 Parallel",
+   "3=3:BAT1 BAT2 Separate"
+  ],
+  "tag": "SELECT",
+  "tip": ""
+ },
+ {
+  "id": "lithiumTypeModelInput2",
+  "kind": "bit",
+  "label": "Bat2 Lithium Brand / No comms",
+  "name": "BIT_LITHIUM_TYPE_2",
+  "options": [
+   "0=0: EG4",
+   "1=1: EG4 Advanced",
+   "2=2",
+   "3=3",
+   "5=5",
+   "6=6",
+   "8=8",
+   "11=11",
+   "14=14",
+   "18=18",
+   "19=19",
+   "20=20",
+   "21=21",
+   "22=22: BRIGGS",
+   "28=28",
+   "30=30: Lithium no comms: 15 cells in series",
+   "31=31: Lithium no comms: 16 cells in series"
+  ],
+  "tag": "SELECT",
+  "tip": "Brand of compatible Lithium Batteries being used."
+ },
+ {
+  "id": "leadCapacityInput",
+  "kind": "hold",
+  "label": "Lead-acid Capacity(Ah)",
+  "max": "5000",
+  "min": "50",
+  "name": "_12K_HOLD_LEAD_CAPACITY",
+  "placeholder": "[50, 5000]",
+  "tag": "INPUT",
+  "tip": "The capacity of installed lead acid battery banks and inverter will enter float charge mode when the charge current is less than 0.01C ."
+ },
+ {
+  "id": "leadAcidChargeVoltRefInput",
+  "kind": "hold",
+  "label": "Absorb Voltage(V)",
+  "max": "59",
+  "min": "50",
+  "name": "HOLD_LEAD_ACID_CHARGE_VOLT_REF",
+  "placeholder": "[50, 59]",
+  "tag": "INPUT",
+  "tip": "Sets the discharge limit for lead-acid batteries."
+ },
+ {
+  "id": "floatingVoltageInput",
+  "kind": "hold",
+  "label": "Float Voltage(V)",
+  "max": "56",
+  "min": "50",
+  "name": "HOLD_FLOATING_VOLTAGE",
+  "placeholder": "[50, 56]",
+  "tag": "INPUT",
+  "tip": "Refer to the battery manufacturer's spec sheet for proper value. The inverter will enter float charge mode when the charge current is less than 0.01C.The float charge voltage should be less than Absorb Voltage."
+ },
+ {
+  "id": "vbatStartDeratingInput",
+  "kind": "hold",
+  "label": "On Grid Discharge Derate Vbatt(V)",
+  "max": "100",
+  "min": "0",
+  "name": "HOLD_VBAT_START_DERATING",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": "Reduce the battery output power when the voltage drops below it, which will decrease from this value to 'On grid cut off Volt +1V'. And this setting just applies to lead-acid batteries and on grid mode.If you do not want this limit, you can set 'derate Vbatt' to be consistent with 'On grid cut off V"
+ },
+ {
+  "id": "equalizationVoltageInput",
+  "kind": "hold",
+  "label": "Equalization Voltage(V)",
+  "max": "700",
+  "min": "90",
+  "name": "HOLD_EQUALIZATION_VOLTAGE",
+  "placeholder": "[90, 700]",
+  "tag": "INPUT",
+  "tip": "1: When using Lead Acid battery, setting range: 90~700.\n2: When using Lithium battery in lead acid mode, input 0."
+ },
+ {
+  "id": "equalizationPeriodInput",
+  "kind": "hold",
+  "label": "Equalization Period(Days)",
+  "max": "365",
+  "name": "HOLD_EQUALIZATION_PERIOD",
+  "placeholder": "[0, 365]",
+  "tag": "INPUT",
+  "tip": "1: When using Lead Acid battery, setting range: 0~365.\n2: When using Lithium battery in lead acid mode, input 0."
+ },
+ {
+  "id": "equalizationTimeInput",
+  "kind": "hold",
+  "label": "Equalization Time(Hours)",
+  "max": "24",
+  "name": "HOLD_EQUALIZATION_TIME",
+  "placeholder": "[0, 24]",
+  "tag": "INPUT",
+  "tip": "1: When using Lead Acid battery, setting range: 0~24.\nWhen using Lithium battery in lead acid mode, input 0."
+ },
+ {
+  "id": "systemChargeSocLimitInput",
+  "kind": "hold",
+  "label": "System Charge SOC Limit(%)",
+  "max": "101",
+  "min": "10",
+  "name": "HOLD_SYSTEM_CHARGE_SOC_LIMIT",
+  "placeholder": "[10, 101]",
+  "tag": "INPUT",
+  "tip": "The max. charge SOC limit for the entire system."
+ },
+ {
+  "id": "systemChargeVoltLimitInput",
+  "kind": "hold",
+  "label": "System Charge Volt Limit(V)",
+  "max": "59.5",
+  "min": "40",
+  "name": "HOLD_SYSTEM_CHARGE_VOLT_LIMIT",
+  "placeholder": "[40, 59.5]",
+  "tag": "INPUT",
+  "tip": "The max. charge Voltage limit for the entire system."
+ },
+ {
+  "id": "leadAcidChargeRateInput",
+  "kind": "hold",
+  "label": "Charge Current Limit(Adc)",
+  "max": "250",
+  "min": "0",
+  "name": "HOLD_LEAD_ACID_CHARGE_RATE",
+  "placeholder": "[0, 250]",
+  "tag": "INPUT",
+  "tip": "The Max. Charge current limitation of the entire system."
+ },
+ {
+  "id": "leadAcidDischargeRateInput",
+  "kind": "hold",
+  "label": "Discharge Current Limit(Adc)",
+  "max": "12",
+  "min": "0",
+  "name": "HOLD_LEAD_ACID_DISCHARGE_RATE",
+  "placeholder": "[0, 12]",
+  "tag": "INPUT",
+  "tip": "Sets the discharge limit for lead-acid batteries."
+ },
+ {
+  "id": "pToUserStartDisChgInput",
+  "kind": "hold",
+  "label": "Start Discharge P_import(W)",
+  "min": "50",
+  "name": "HOLD_P_TO_USER_START_DISCHG",
+  "placeholder": "[50,]",
+  "tag": "INPUT",
+  "tip": "When set to 100, the battery will begin to discharge power to take the loads when the imported power from the grid is higher than 100W."
+ },
+ {
+  "id": "socLowLimitEpsDischgInput",
+  "kind": "hold",
+  "label": "Off-Grid Cut-Off SOC(%)",
+  "max": "90",
+  "min": "0",
+  "name": "HOLD_SOC_LOW_LIMIT_EPS_DISCHG",
+  "placeholder": "[0, 90]",
+  "tag": "INPUT",
+  "tip": "SOC% at which the batteries will stop discharging in Off-Grid mode. It should be less than or equal to On-grid cutoff SOC.When volt reaches it, inverter will forced charge +3%.Restore discharge: Discharge will allowed after forced charge +5%."
+ },
+ {
+  "id": "disChgCutOffSocInput",
+  "kind": "hold",
+  "label": "On-Grid Cut-Off SOC(%)",
+  "max": "90",
+  "min": "0",
+  "name": "HOLD_DISCHG_CUT_OFF_SOC_EOD",
+  "placeholder": "[0, 90]",
+  "tag": "INPUT",
+  "tip": "SOC% at which the batteries will stop discharging with Grid Access. It should be greater than or equal to Off-grid cutoff SOC."
+ },
+ {
+  "id": "leadAcidDischargeCutOffVoltInput",
+  "kind": "hold",
+  "label": "Off-Grid Cut-Off Volt(V)",
+  "max": "56",
+  "min": "40",
+  "name": "HOLD_LEAD_ACID_DISCHARGE_CUT_OFF_VOLT",
+  "placeholder": "[40, 56]",
+  "tag": "INPUT",
+  "tip": "Voltage at which the batteries will stop discharging in Off-Grid mode.When volt reaches it, inverter will forced charge +2V when grid available.Restore discharge: Discharge will allowed after forced charge +2V. But if volt is still below 48V after that, it needs to be above 48V to allow discharge."
+ },
+ {
+  "id": "onGridCutOffInput",
+  "kind": "hold",
+  "label": "On-Grid Cut-Off Volt(V)",
+  "max": "56",
+  "min": "40",
+  "name": "HOLD_ON_GRID_EOD_VOLTAGE",
+  "placeholder": "[40, 56]",
+  "tag": "INPUT",
+  "tip": "Voltage at which the batteries will stop discharging with Grid Access"
+ },
+ {
+  "id": "accumulatedUncalibratedCountDaysInput",
+  "kind": "hold",
+  "label": "Accumulated Uncalibrated Count(Days)",
+  "max": "255",
+  "name": "ASC_HOLD_ACCUMULATED_UNCALIBRATED_COUNT_DAYS",
+  "placeholder": "[0, 255]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "calibrationPeriodDaysInput",
+  "kind": "hold",
+  "label": "Calibration Period(Days)",
+  "max": "255",
+  "name": "ASC_HOLD_CALIBRATION_PERIOD_DAYS",
+  "placeholder": "[0, 255]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_OFF_GRID_START_HOUR_1",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_OFF_GRID_START_MINUTE_1",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_OFF_GRID_END_HOUR_1",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_OFF_GRID_END_MINUTE_1",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_OFF_GRID_START_HOUR_2",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_OFF_GRID_START_MINUTE_2",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_OFF_GRID_END_HOUR_2",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_OFF_GRID_END_MINUTE_2",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_OFF_GRID_START_HOUR_3",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_OFF_GRID_START_MINUTE_3",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_OFF_GRID_END_HOUR_3",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_OFF_GRID_END_MINUTE_3",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "batChargeCurrentLimitInput",
+  "kind": "hold",
+  "label": "Batt Charge Current Limit(Adc)",
+  "max": "4000",
+  "min": "0",
+  "name": "OFF_GRID_HOLD_MAX_GEN_CHG_BAT_CURR",
+  "placeholder": "[0, 4000]",
+  "tag": "INPUT",
+  "tip": "Determines the amount of current used for charging the batteries with the Generator."
+ },
+ {
+  "id": "genCoolDownTimeInput",
+  "kind": "hold",
+  "label": "Generator Cool-Down Time(Min)",
+  "max": "250",
+  "min": "0",
+  "name": "_12K_HOLD_GEN_COOL_DOWN_TIME",
+  "placeholder": "[0.1, 25.5]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "chargeStartVoltInput",
+  "kind": "hold",
+  "label": "Charge Start Volt(V)",
+  "max": "57",
+  "min": "40",
+  "name": "OFF_GRID_HOLD_GEN_CHG_START_VOLT",
+  "placeholder": "[40, 57]",
+  "tag": "INPUT",
+  "tip": "Start the generator through dry contacts when battery voltage below start Volt. Warming up the generator for 2 minutes before Gen relay close."
+ },
+ {
+  "id": "chargeEndVoltInput",
+  "kind": "hold",
+  "label": "Charge End Volt(V)",
+  "max": "59",
+  "min": "42",
+  "name": "OFF_GRID_HOLD_GEN_CHG_END_VOLT",
+  "placeholder": "[42, 59]",
+  "tag": "INPUT",
+  "tip": "Stop the generator by the dry contact after battery Voltage is higher than end Volt and perform a cool-down time"
+ },
+ {
+  "id": "genPeakShavingPowerInput",
+  "kind": "hold",
+  "label": "Gen Rated Power(kW)",
+  "max": "255",
+  "min": "0",
+  "name": "HOLD_MAX_GENERATOR_INPUT_POWER",
+  "placeholder": "[0, 6553.5]",
+  "tag": "INPUT",
+  "tip": "You can limit the battery charge power based on the detected inverter\u2019s load consumption and Generator input power limitations."
+ },
+ {
+  "id": "chargeStartSocInput",
+  "kind": "hold",
+  "label": "Charge Start SOC(%)",
+  "max": "100",
+  "min": "0",
+  "name": "OFF_GRID_HOLD_GEN_CHG_START_SOC",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": "Start the generator through dry contacts when battery SOC below start SOC. Warming up the generator for 2 minutes before Gen relay close."
+ },
+ {
+  "id": "chargeEndSocInput",
+  "kind": "hold",
+  "label": "Charge End SOC(%)",
+  "max": "100",
+  "min": "0",
+  "name": "OFF_GRID_HOLD_GEN_CHG_END_SOC",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": "Stop the generator by the dry contact after battery SOC is higher than end SOC and perform a cool-down time"
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_GEN_START_HOUR_1",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_GEN_START_MINUTE_1",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_GEN_END_HOUR_1",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_GEN_END_MINUTE_1",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_GEN_START_HOUR_2",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_GEN_START_MINUTE_2",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_GEN_END_HOUR_2",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_GEN_END_MINUTE_2",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "acCoupleStartSocInput",
+  "kind": "hold",
+  "label": "AC Couple Start SOC(%)",
+  "max": "80",
+  "name": "_12K_HOLD_AC_COUPLE_START_SOC",
+  "placeholder": "[0, 80]",
+  "tag": "INPUT",
+  "tip": "In off grid mode, it enters charge mode after SOC below Start SOC. Please ensure that the connected on-grid PV inverter has Frequency Shifting function"
+ },
+ {
+  "id": "acCoupleEndSocInput",
+  "kind": "hold",
+  "label": "AC Couple End SOC(%)",
+  "max": "100",
+  "name": "_12K_HOLD_AC_COUPLE_END_SOC",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": "In off grid mode, it exits AC couple after SOC reaches End SOC.Set to 101%, allowing the AC Couple bypass to take load after being fully charged"
+ },
+ {
+  "id": "acCoupleStartVoltInput",
+  "kind": "hold",
+  "label": "AC Couple Start Volt(V)",
+  "max": "59.5",
+  "min": "40",
+  "name": "_12K_HOLD_AC_COUPLE_START_VOLT",
+  "placeholder": "[40, 59.5]",
+  "tag": "INPUT",
+  "tip": "In off grid mode, it enters charge mode after Voltage below Satrt volt. Please ensure that the connected on-grid PV inverter has Frequency Shift function"
+ },
+ {
+  "id": "acCoupleEndVoltInput",
+  "kind": "hold",
+  "label": "AC Couple End Volt(V)",
+  "max": "80",
+  "min": "42",
+  "name": "_12K_HOLD_AC_COUPLE_END_VOLT",
+  "placeholder": "[42, 80]",
+  "tag": "INPUT",
+  "tip": "In off grid mode, it exits AC couple after battery voltage reaches End Volt .Set to 59.5V, allowing the AC Couple bypass to take load after being fully charged ."
+ },
+ {
+  "id": "startPvPowerInput",
+  "kind": "hold",
+  "label": "Start PV Power(kW)",
+  "max": "25.5",
+  "name": "_12K_HOLD_START_PV_POWER",
+  "placeholder": "[0, 25.5]",
+  "tag": "INPUT",
+  "tip": "This is the minimum PV power limit to function with smart load output."
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_SMART_LOAD_START_HOUR_1",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_SMART_LOAD_START_MINUTE_1",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_SMART_LOAD_END_HOUR_1",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_SMART_LOAD_END_MINUTE_1",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_SMART_LOAD_START_HOUR_2",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_SMART_LOAD_START_MINUTE_2",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_SMART_LOAD_END_HOUR_2",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_SMART_LOAD_END_MINUTE_2",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_SMART_LOAD_START_HOUR_3",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_SMART_LOAD_START_MINUTE_3",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_SMART_LOAD_END_HOUR_3",
+  "placeholder": "[0, 23]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "",
+  "kind": "hold",
+  "label": "",
+  "max": "23",
+  "name": "HOLD_SMART_LOAD_END_MINUTE_3",
+  "placeholder": "[0, 59]",
+  "tag": "INPUT",
+  "tip": ""
+ },
+ {
+  "id": "smartLoadStartSocInput",
+  "kind": "hold",
+  "label": "Smart Load Start SOC(%)",
+  "max": "100",
+  "name": "_12K_HOLD_SMART_LOAD_START_SOC",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": "Turn on when the battery is above the Start SOC."
+ },
+ {
+  "id": "smartLoadEndSocInput",
+  "kind": "hold",
+  "label": "Smart Load End SOC(%)",
+  "max": "100",
+  "name": "_12K_HOLD_SMART_LOAD_END_SOC",
+  "placeholder": "[0, 100]",
+  "tag": "INPUT",
+  "tip": "Turn off when the battery is below End SOC"
+ },
+ {
+  "id": "smartLoadStartVoltInput",
+  "kind": "hold",
+  "label": "Smart Load Start Volt(V)",
+  "max": "59",
+  "min": "40",
+  "name": "_12K_HOLD_SMART_LOAD_START_VOLT",
+  "placeholder": "[40, 59]",
+  "tag": "INPUT",
+  "tip": "Turn on smart load when the battery is above the Start Volt."
+ },
+ {
+  "id": "smartLoadEndVoltInput",
+  "kind": "hold",
+  "label": "Smart Load End Volt(V)",
+  "max": "59",
+  "min": "40",
+  "name": "_12K_HOLD_SMART_LOAD_END_VOLT",
+  "placeholder": "[40, 59]",
+  "tag": "INPUT",
+  "tip": "Turn off smart load when the battery is below End Volt"
+ },
+ {
+  "id": "gridTypeInput",
+  "kind": "hold",
+  "label": "Grid Type",
+  "name": "_12K_HOLD_GRID_TYPE",
+  "options": [
+   "0=0: 240V/120V",
+   "1=1: 208V/120V",
+   "2=2: 240V",
+   "3=3: 230V",
+   "4=4: 200V/100V",
+   "5=5: 220V/127V"
+  ],
+  "tag": "SELECT",
+  "tip": "Select the correct Grid type to function, such as split phase: 240/120 or 208/120V."
+ },
+ {
+  "kind": "function",
+  "label": "Normal / Standby",
+  "name": "FUNC_SET_TO_STANDBY",
+  "tip": "When set to Standby, it stop feed in, charge and discharge. If the grid is available, the Grid bypass relay will close and the grid will take the load normally."
+ },
+ {
+  "kind": "function",
+  "label": "Off-Grid Mode",
+  "name": "FUNC_GREEN_EN",
+  "tip": "It is for absolute zero-export, when there is an AC connection. When enabled, the battery discharges power to load first and  the grid will not assist in powering loads and the batteries will not charge from AC unless 'AC charge' is enabled."
+ },
+ {
+  "kind": "function",
+  "label": "Buzzer Enable",
+  "name": "FUNC_BUZZER_EN",
+  "tip": "Enable/disable the alarm buzzer."
+ },
+ {
+  "kind": "function",
+  "label": "Grid Loss Warning Clear",
+  "name": "FUNC_RUN_WITHOUT_GRID_12K",
+  "tip": "Enable for an absolute Off-Grid system. The 'No AC Connection' and 'AC V /F out of range' warnings will not occur when enabled."
+ },
+ {
+  "kind": "function",
+  "label": "Power Backup",
+  "name": "FUNC_EPS_EN",
+  "tip": "Allows for the use of the inverter as a backup system."
+ },
+ {
+  "kind": "function",
+  "label": "Seamless EPS switching",
+  "name": "FUNC_SW_SEAMLESSLY_EN",
+  "tip": "When power is interrupted, the inverter will turn to EPS mode seamlessly \nunless there is a grid voltage fluctuation issue; \nin which case, we suggest you set to \u201cDisable\u201d to avoid misjudgment."
+ },
+ {
+  "kind": "function",
+  "label": "No Batteries",
+  "name": "FUNC_PV_GRID_OFF_EN",
+  "tip": "Allows access to Off-Grid mode when there is no battery and solar is the only input available."
+ },
+ {
+  "kind": "function",
+  "label": "RSD",
+  "name": "FUNC_RSD_DISABLE",
+  "tip": "Enable or disable the rapid shut-down detection of the PV inputs."
+ },
+ {
+  "kind": "function",
+  "label": "PV Arc",
+  "name": "FUNC_PV_ARC",
+  "tip": "The inverter will detect when there is a PV input Arc Fault and protect the inverter from an Arc Fault."
+ },
+ {
+  "kind": "function",
+  "label": "PV Arc Fault Clear",
+  "name": "FUNC_PV_ARC_FAULT_CLEAR",
+  "tip": "Clear the records of PV Arc fault."
+ },
+ {
+  "kind": "function",
+  "label": "Grid Sell Back",
+  "name": "FUNC_FEED_IN_GRID_EN",
+  "tip": "Enable to export power back to the grid. Disable for no export to the grid."
+ },
+ {
+  "kind": "function",
+  "label": "Grid Sell Back",
+  "name": "FUNC_TAKE_LOAD_TOGETHER",
+  "tip": "Enable to export power back to the grid. Disable for no export to the grid."
+ },
+ {
+  "kind": "function",
+  "label": "Fast Zero Export",
+  "name": "FUNC_RUN_WITHOUT_GRID",
+  "tip": "Allows for Zero Export. Inverter will speed up the control to avoid export power, but the control speed for import will be slowed down.Should be selected as the opposite of the Grid Sell Back setting."
+ },
+ {
+  "kind": "function",
+  "label": "Grid Boss Enable",
+  "name": "FUNC_MIDBOX_EN",
+  "tip": ""
+ },
+ {
+  "kind": "function",
+  "label": "Parallel Setting Data Sync",
+  "name": "FUNC_PARALLEL_DATA_SYNC_EN",
+  "tip": "Syncs master inverter settings with all paralleled inverters."
+ },
+ {
+  "kind": "function",
+  "label": "Share Battery",
+  "name": "FUNC_BAT_SHARED",
+  "tip": "Allows for the sharing of battery banks between inverters."
+ },
+ {
+  "kind": "function",
+  "label": "CT A Direction Reversed",
+  "name": "FUNC_WATT_NODE_CT_DIRECTION_A",
+  "tip": ""
+ },
+ {
+  "kind": "function",
+  "label": "CT B Direction Reversed",
+  "name": "FUNC_WATT_NODE_CT_DIRECTION_B",
+  "tip": ""
+ },
+ {
+  "kind": "function",
+  "label": "CT C Direction Reversed",
+  "name": "FUNC_WATT_NODE_CT_DIRECTION_C",
+  "tip": ""
+ },
+ {
+  "kind": "function",
+  "label": "CT Direction Reversed",
+  "name": "FUNC_CT_DIRECTION_REVERSED",
+  "tip": "Used to reverses the direction of the CTs incase they were installed incorrectly."
+ },
+ {
+  "kind": "function",
+  "label": "Battery Backup Mode",
+  "name": "FUNC_BATTERY_BACKUP_CTRL",
+  "tip": "Enable to set battery as 24/7 backup power.This mode prioritizes using PV power and then grid power to charge and take load. Use battery only when there is a grid power outage."
+ },
+ {
+  "kind": "function",
+  "label": "Grid Peak-Shaving",
+  "name": "FUNC_GRID_PEAK_SHAVING",
+  "tip": "Peak-Shaving is used to avoid peak demand charges from the grid. Peak shaving can be accomplished by halting Grid Charging at specific times,for example, during periods of peak demand (i.e., high grid rates), or when the batteries are near fully charged based on SOC and Voltage."
+ },
+ {
+  "kind": "function",
+  "label": "AC Charge Enable",
+  "name": "FUNC_AC_CHARGE",
+  "tip": "Allows for the use of Grid power to charge the batteries."
+ },
+ {
+  "kind": "function",
+  "label": "Sporadic Charge",
+  "name": "FUNC_SPORADIC_CHARGE",
+  "tip": "Once enabled it in AC charge mode, the AC charging power will sporadic between the set AC charge power and 2% of the rated charge power."
+ },
+ {
+  "kind": "function",
+  "label": "PV Charge Priority",
+  "name": "FUNC_FORCED_CHG_EN",
+  "tip": "Routes the majority of PV production to charge the batteries."
+ },
+ {
+  "kind": "function",
+  "label": "Forced Discharge Enable",
+  "name": "FUNC_FORCED_DISCHG_EN",
+  "tip": "Forcably discharges batteries to supply loads demand or export to grid when Grid Sell back is enabled."
+ },
+ {
+  "kind": "function",
+  "label": "Export PV Only",
+  "name": "FUNC_PV_SELL_TO_GRID_EN",
+  "tip": "Enable for only PV sell back"
+ },
+ {
+  "kind": "function",
+  "label": "Batt Charge Control",
+  "name": "FUNC_BAT_CHARGE_CONTROL",
+  "tip": "When communicating in closed-loop, select charge control according to 'SOC'. When not communicating in closed-loop, select 'Voltage' to charge by voltage readings."
+ },
+ {
+  "kind": "function",
+  "label": "Charge Last",
+  "name": "FUNC_CHARGE_LAST",
+  "tip": "This function is applicable to cases where the PV panels are over-sized. Setting charging to minimum priority allows the system to charge batteries while feeding in at maximum power when stronger light is available, thereby maximizing the use of available solar energy"
+ },
+ {
+  "kind": "function",
+  "label": "Batt Discharge Control",
+  "name": "FUNC_BAT_DISCHARGE_CONTROL",
+  "tip": "When communicating in closed-loop, select discharge control according to 'SOC'. When not communicating in closed-loop, select 'Voltage' to discharge by voltage readings."
+ },
+ {
+  "kind": "function",
+  "label": "Battery Calibration Enable",
+  "name": "FUNC_BATTERY_CALIBRATION_EN",
+  "tip": ""
+ },
+ {
+  "kind": "function",
+  "label": "Micro-Grid",
+  "name": "FUNC_MICRO_GRID_EN",
+  "tip": "Only set this when Generator is connected to the Inverter's Grid Terminal. With this setting enabled, the inverter will use AC power to charge the battery and will not export any  power."
+ },
+ {
+  "kind": "function",
+  "label": "Generator Boost",
+  "name": "FUNC_GEN_PEAK_SHAVING",
+  "tip": ""
+ },
+ {
+  "kind": "function",
+  "label": "AC Couple",
+  "name": "FUNC_AC_COUPLING_FUNCTION",
+  "tip": "Connect existing On-Grid PV inverter to the Gen port as an AC Couple system.In On-grid mode, please enable Grid Sell Back or Off-grid mode.In Off-grid mdoe, please make sure the PV inverter have enabled the Frequency Shifting function."
+ },
+ {
+  "kind": "function",
+  "label": "Smart Load",
+  "name": "FUNC_SMART_LOAD_ENABLE",
+  "tip": "Repurposes the GEN port as a Loads Port. The inverter will then provide power to this load according to the configured settings.Noted: If you enable the Smart Load function, it's forbidden to connect the generator or AC Couple system at the same time, otherwise the device will be damaged!"
+ },
+ {
+  "kind": "function",
+  "label": "Grid Always On",
+  "name": "FUNC_ON_GRID_ALWAYS_ON",
+  "tip": "Enable for continuous power supply on the GEN port when the grid is on."
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": ""
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_PEAK_SHAVING_START_TIME_1"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_PEAK_SHAVING_END_TIME_1"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_PEAK_SHAVING_START_TIME_2"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_PEAK_SHAVING_END_TIME_2"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_AC_CHARGE_START_TIME"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_AC_CHARGE_END_TIME"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_AC_CHARGE_START_TIME_1"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_AC_CHARGE_END_TIME_1"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_AC_CHARGE_START_TIME_2"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_AC_CHARGE_END_TIME_2"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_FORCED_CHARGE_START_TIME"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_FORCED_CHARGE_END_TIME"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_FORCED_CHARGE_START_TIME_1"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_FORCED_CHARGE_END_TIME_1"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_FORCED_CHARGE_START_TIME_2"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_FORCED_CHARGE_END_TIME_2"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_FORCED_DISCHARGE_START_TIME"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_FORCED_DISCHARGE_END_TIME"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_FORCED_DISCHARGE_START_TIME_1"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_FORCED_DISCHARGE_END_TIME_1"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_FORCED_DISCHARGE_START_TIME_2"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_FORCED_DISCHARGE_END_TIME_2"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_OFF_GRID_START_TIME_1"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_OFF_GRID_END_TIME_1"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_OFF_GRID_START_TIME_2"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_OFF_GRID_END_TIME_2"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_OFF_GRID_START_TIME_3"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_OFF_GRID_END_TIME_3"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_GEN_START_TIME_1"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_GEN_END_TIME_1"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_GEN_START_TIME_2"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_GEN_END_TIME_2"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_SMART_LOAD_START_TIME_1"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_SMART_LOAD_END_TIME_1"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_SMART_LOAD_START_TIME_2"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_SMART_LOAD_END_TIME_2"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_SMART_LOAD_START_TIME_3"
+ },
+ {
+  "kind": "time",
+  "label": "",
+  "name": "HOLD_SMART_LOAD_END_TIME_3"
+ }
+]
