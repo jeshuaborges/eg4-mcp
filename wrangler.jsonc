@@ -2,6 +2,9 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "eg4-mcp",
   "main": "src/index.ts",
+  // Irving Family Cloudflare account
+  "account_id": "9962565b22f960c8f86eb6597a4bd559",
+  "workers_dev": true,
   "compatibility_date": "2026-10-01",
   // global_fetch_strictly_public: required by the OAuth provider for safe
   // Client ID Metadata Document fetches (SSRF protection).
@@ -11,12 +14,12 @@
       // OAuth grants/tokens (workers-oauth-provider) plus this server's cache:
       // encrypted EG4 session cookies, device lists and the change audit log ("eg4mcp:" keys).
       "binding": "OAUTH_KV",
-      "id": "REPLACE_WITH_KV_NAMESPACE_ID"
+      "id": "a2e81b4ba4af48c3b3bc7d127124ddeb"
     }
   ],
   "vars": {
     // Public origin of this Worker. It becomes the OAuth issuer and MCP resource id; set it before the first deploy.
-    "PUBLIC_BASE_URL": "https://eg4-mcp.REPLACE.workers.dev",
+    "PUBLIC_BASE_URL": "https://eg4-mcp.irving-family.workers.dev",
     "EG4_BASE_URL": "https://monitor.eg4electronics.com"
   },
   // Secrets (set with `wrangler secret put`):

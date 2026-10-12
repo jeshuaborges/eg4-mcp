@@ -59,15 +59,29 @@ Only settings in `src/eg4/settings.ts` can be changed. Grid-compliance (voltage/
 
 ## Deploy
 
+The server is deployed to the **Irving Family** Cloudflare account at **https://eg4-mcp.irving-family.workers.dev**. The connector URL is `https://eg4-mcp.irving-family.workers.dev/mcp`.
+
+- **Already provisioned:**
+  - KV namespace `eg4-mcp-OAUTH_KV` (id in `wrangler.jsonc`)
+  - the `EG4_CACHE_KEY` secret, which was generated inside Cloudflare and never written down
+  - the workers.dev route
+- **Deploys** run from `.github/workflows/deploy.yml` on every push to `main`, after the typecheck and tests pass. They need one repo secret:
+  - `CLOUDFLARE_API_TOKEN`: create it in the Cloudflare dashboard → My Profile → API Tokens → *Edit Cloudflare Workers* template, with Account Resources set to Irving Family.
+- **Manual deploy:** `CLOUDFLARE_API_TOKEN=… npx wrangler deploy`.
+
+Fresh setup elsewhere:
+
 ```bash
 npm ci
 npx wrangler kv namespace create OAUTH_KV        # put the id in wrangler.jsonc
-# set PUBLIC_BASE_URL in wrangler.jsonc to the Worker's final URL
+# set account_id and PUBLIC_BASE_URL in wrangler.jsonc
 openssl rand -base64 32 | npx wrangler secret put EG4_CACHE_KEY
 npx wrangler deploy
 ```
 
-Then add `https://<PUBLIC_BASE_URL>/mcp` as a custom connector in claude.ai (Settings → Connectors).
+Then add the `/mcp` URL as a custom connector in claude.ai (Settings → Connectors).
+
+EG4's portal accepts requests from Cloudflare's network. This was checked from the IAD colo, and login responds in about 300 ms.
 
 Changing `PUBLIC_BASE_URL` or rotating `EG4_CACHE_KEY` invalidates existing connections and cached sessions, so users have to reconnect.
 
