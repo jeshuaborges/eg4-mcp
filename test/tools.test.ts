@@ -107,10 +107,36 @@ describe("eg4_change_settings", () => {
     expect(eg4.settings.HOLD_DISCHG_CUT_OFF_SOC_EOD).toBe("20");
     expect(eg4.settings.FUNC_BAT_DISCHARGE_CONTROL).toBe(true);
     expect(eg4.settings.LSP_HOLD_DIS_CHG_POWER_TIME_37).toBe("16");
-    // control mode is written before cut-offs
-    expect(writes(eg4)[0]!.form.get("functionParam")).toBe("FUNC_BAT_DISCHARGE_CONTROL");
+    // cut-offs and windows are written before the control mode that activates them
+    expect(writes(eg4).map((c) => c.form.get("holdParam") ?? c.form.get("timeParam") ?? c.form.get("functionParam"))).toEqual([
+      "HOLD_DISCHG_CUT_OFF_SOC_EOD",
+      "HOLD_PEAK_SHAVING_START_TIME_1",
+      "FUNC_BAT_DISCHARGE_CONTROL",
+    ]);
+    expect(r.json.applied).toBe("all");
     const hist = await call("eg4_change_history");
     expect(hist.json[0].changes).toHaveLength(3);
+  });
+
+  it("switches features off first and on last, after their settings", async () => {
+    const { call, eg4 } = await connect(props({ canWrite: true }));
+    await call("eg4_change_settings", {
+      changes: { forced_discharge_enabled: "on", forced_discharge_power_kw: 3, ac_charge_enabled: "off", forced_discharge_stop_soc_pct: 40 },
+      apply: true,
+    });
+    const order = writes(eg4).map((c) => c.form.get("holdParam") ?? c.form.get("functionParam"));
+    expect(order[0]).toBe("FUNC_AC_CHARGE");
+    expect(order.at(-1)).toBe("FUNC_FORCED_DISCHG_EN");
+  });
+
+  it("reports a partial apply with what landed and what was skipped", async () => {
+    const { call } = await connect(props({ canWrite: true }), { reject: ["HOLD_AC_CHARGE_POWER_CMD"] });
+    const r = await call("eg4_change_settings", { changes: { on_grid_cutoff_soc_pct: 20, ac_charge_power_kw: 6, ac_charge_enabled: "off" }, apply: true });
+    expect(r.json.applied).toBe("partial");
+    expect(r.json.headline).toMatch(/Earlier changes DID land/);
+    const byKey = Object.fromEntries(r.json.verification.map((v: any) => [v.setting, v.status]));
+    expect(byKey).toEqual({ ac_charge_enabled: "written", on_grid_cutoff_soc_pct: "written", ac_charge_power_kw: "rejected" });
+    expect(r.json.undo).toEqual({ ac_charge_enabled: "on", on_grid_cutoff_soc_pct: 15 });
   });
 
   it("refuses to apply when the review finds errors", async () => {
@@ -132,8 +158,24 @@ describe("eg4_change_settings", () => {
     const { call, eg4 } = await connect(props({ canWrite: true }), { reject: ["HOLD_LEAD_ACID_CHARGE_RATE"] });
     const r = await call("eg4_change_settings", { changes: { charge_current_limit_a: 100, ac_charge_power_kw: 6 }, apply: true });
     expect(r.json.results).toEqual([expect.objectContaining({ setting: "charge_current_limit_a", status: "rejected", message: "PARAM_OUT_OF_RANGE" })]);
-    expect(r.json.all_verified).toBe(false);
+    expect(r.json.applied).toBe("none");
+    expect(r.json.verification.find((v: any) => v.setting === "ac_charge_power_kw").status).toBe("not_attempted");
     expect(writes(eg4)).toHaveLength(1);
+  });
+
+  it("still reports landed writes when the read-back fails", async () => {
+    const { call, eg4 } = await connect(props({ canWrite: true }));
+    const env = eg4; // flip remoteRead to failing after the writes
+    const r1 = await call("eg4_change_settings", { changes: { on_grid_cutoff_soc_pct: 25 } }); // preview reads fine
+    expect(r1.json.mode).toBe("preview");
+    env.failReadsAfterWrite = true;
+    const r = await call("eg4_change_settings", { changes: { on_grid_cutoff_soc_pct: 25 }, apply: true });
+    expect(r.isError).toBe(false);
+    expect(r.json.applied).toBe("all");
+    expect(r.json.all_verified).toBeNull();
+    expect(r.json.read_back_error).toMatch(/DEVICE_TIMEOUT/);
+    expect(r.json.headline).toMatch(/read-back failed/);
+    expect(r.json.undo).toEqual({ on_grid_cutoff_soc_pct: 15 });
   });
 
   it("flags a write EG4 accepted but the inverter didn't keep", async () => {

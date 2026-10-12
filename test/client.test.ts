@@ -57,3 +57,17 @@ describe("Eg4Client sessions", () => {
     await expect(c.call("/WManage/web/maintain/remoteSet/write", { holdParam: "HOLD_X", valueText: "1" })).rejects.toThrow(/PARAM_OUT_OF_RANGE/);
   });
 });
+
+describe("parallel session refresh", () => {
+  it("lets concurrent calls share one re-login when the session expires", async () => {
+    const env = makeEnv();
+    const eg4 = fakeEg4();
+    const c = new Eg4Client(env, props(), eg4.fetchImpl);
+    await c.session(); // S1 cached
+    const stale = "JSESSIONID=S1-n1";
+    const [a, b] = await Promise.all([c.session(stale), c.session(stale)]);
+    expect(a).toBe("JSESSIONID=S2-n1");
+    expect(b).toBe("JSESSIONID=S2-n1");
+    expect(eg4.logins()).toBe(2);
+  });
+});

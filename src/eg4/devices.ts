@@ -71,7 +71,7 @@ export async function resolveSerial(env: Env, eg4: Eg4Client, serialNum?: string
     if (!d) throw new Eg4Error(`Serial ${serialNum} isn't on this EG4 account. Devices: ${devices.map((x) => `${x.serialNum} (${x.type})`).join(", ") || "none"}.`, "input");
     return d;
   }
-  const inverters = devices.filter((d) => d.batteryType !== "NO_BATTERY");
+  const inverters = devices.filter((d) => d.deviceType !== 9 && d.batteryType !== "NO_BATTERY" && d.batteryType !== "");
   if (inverters.length === 1) return inverters[0]!;
   throw new Eg4Error(
     inverters.length === 0

@@ -252,14 +252,14 @@ export function currentValue(s: Setting, flat: Flat): string | number | undefine
     case "bit":
     case "modelBit": {
       const raw = flat[s.readKey];
-      if (raw === undefined || raw === null) return undefined;
+      if (raw === undefined || raw === null || raw === "") return undefined;
       const n = Number(raw);
       return Object.entries(s.values).find(([, v]) => v === n)?.[0] ?? `code_${n}`;
     }
     case "time": {
       const h = flat[s.readHour];
       const m = flat[s.readMinute];
-      if (h === undefined || m === undefined) return undefined;
+      if (h === undefined || m === undefined || h === null || m === null || h === "" || m === "") return undefined;
       return `${pad2(Number(h))}:${pad2(Number(m))}`;
     }
   }
@@ -365,8 +365,16 @@ export function review(writes: PlannedWrite[], current: Flat): { errors: string[
 
   const onSoc = Number(get("on_grid_cutoff_soc_pct"));
   const offSoc = Number(get("off_grid_cutoff_soc_pct"));
-  if (Number.isFinite(onSoc) && Number.isFinite(offSoc) && offSoc > onSoc) {
-    errors.push(`off_grid_cutoff_soc_pct (${offSoc}%) must be ≤ on_grid_cutoff_soc_pct (${onSoc}%).`);
+  for (const [offKey, onKey, unit] of [
+    ["off_grid_cutoff_soc_pct", "on_grid_cutoff_soc_pct", "%"],
+    ["off_grid_cutoff_volt", "on_grid_cutoff_volt", " V"],
+  ] as const) {
+    const off = Number(get(offKey));
+    const on = Number(get(onKey));
+    if (!Number.isFinite(off) || !Number.isFinite(on) || off <= on) continue;
+    const msg = `${offKey} (${off}${unit}) must be ≤ ${onKey} (${on}${unit}).`;
+    if (changed.has(offKey) || changed.has(onKey)) errors.push(msg);
+    else warnings.push(`The inverter is already out of order: ${msg}`);
   }
   if (get("ac_charge_enabled") === "on" && get("battery_backup_mode") === "on" && (changed.has("ac_charge_enabled") || changed.has("battery_backup_mode"))) {
     errors.push("ac_charge_enabled and battery_backup_mode can't both be on; EG4 refuses the second one.");
@@ -390,21 +398,37 @@ export function review(writes: PlannedWrite[], current: Flat): { errors: string[
   if (changed.has("battery_type") && get("battery_type") === "lithium" && get("lithium_brand") !== undefined && !String(get("lithium_brand")).startsWith("no_comms")) {
     warnings.push("Closed-loop lithium needs a working BMS cable from the master battery to the inverter; without it the inverter raises a BMS comm fault and stops using the battery. Check eg4_get_status afterwards (soc and bms fields should populate).");
   }
+  const noBms = get("battery_type") === "lead_acid" || get("battery_type") === "no_battery" || String(get("lithium_brand") ?? "").startsWith("no_comms");
+  if (noBms && (get("discharge_control") === "soc" || get("charge_control") === "soc") && ["battery_type", "lithium_brand", "discharge_control", "charge_control"].some((k) => changed.has(k))) {
+    warnings.push("SOC control needs closed-loop BMS communication; with lead_acid or a no_comms lithium type the inverter has no real SOC. Use volt control.");
+  }
   if (Number.isFinite(onSoc) && onSoc < 10 && changed.has("on_grid_cutoff_soc_pct")) {
     warnings.push(`on_grid_cutoff_soc_pct ${onSoc}% leaves little reserve for an outage or for SOC drift.`);
   }
 
-  // Apply order: battery type/brand before control mode; the cut-off pair in whichever order keeps off ≤ on at every step.
+  // Apply order, chosen so a refusal part-way leaves the inverter no worse off:
+  //   0 switch features off (and standby)       — safe to do first
+  //   1 battery type, 2 lithium brand
+  //   3–5 cut-off pairs, ordered so off ≤ on at every step — written before the control mode that activates them
+  //   6 other values and time windows            — before the features that use them are switched on
+  //   7 charge/discharge control mode
+  //   8 switch features on (and normal mode)     — last
+  const pairRank = (w: PlannedWrite, offKey: string, onKey: string): number | null => {
+    if (w.setting.key === onKey) return 4;
+    if (w.setting.key === offKey) return Number(w.value) < Number(currentValue(w.setting, current) ?? Infinity) ? 3 : 5;
+    return null;
+  };
   const rank = (w: PlannedWrite): number => {
-    const k = w.setting.key;
-    if (k === "battery_type") return 0;
-    if (k === "lithium_brand") return 1;
-    if (k === "charge_control" || k === "discharge_control") return 2;
-    if (k === "off_grid_cutoff_soc_pct") return Number(w.value) < Number(currentValue(w.setting, current) ?? Infinity) ? 3 : 5;
-    if (k === "on_grid_cutoff_soc_pct") return 4;
-    if (w.setting.kind === "function" && w.value === "off") return 6; // turn things off before turning others on
-    return 7;
+    const s = w.setting;
+    if (s.key === "charge_control" || s.key === "discharge_control") return 7;
+    if (s.kind === "function") return DISABLING.has(String(w.value)) ? 0 : 8;
+    if (s.key === "battery_type") return 1;
+    if (s.key === "lithium_brand") return 2;
+    return pairRank(w, "off_grid_cutoff_soc_pct", "on_grid_cutoff_soc_pct") ?? pairRank(w, "off_grid_cutoff_volt", "on_grid_cutoff_volt") ?? 6;
   };
   const ordered = [...writes].sort((a, b) => rank(a) - rank(b));
   return { errors, warnings, ordered };
 }
+
+/** Function values that switch something off. */
+const DISABLING = new Set(["off", "standby"]);

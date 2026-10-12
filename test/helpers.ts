@@ -97,10 +97,12 @@ export function fakeEg4(opts: FakeOptions = {}) {
   const calls: Call[] = [];
   const settings = baseSettings();
   let logins = 0;
+  let wrote = false;
   let expire = opts.expireSessions ?? 0;
   const json = (body: unknown, status = 200, headers: Record<string, string> = {}) =>
     new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json", ...headers } });
 
+  let state: { failReadsAfterWrite: boolean };
   const fetchImpl = (async (input: RequestInfo | URL, init?: RequestInit) => {
     const url = new URL(String(input));
     const path = url.pathname.replace(/^\/WManage/, "");
@@ -113,6 +115,7 @@ export function fakeEg4(opts: FakeOptions = {}) {
       logins++;
       return json({ success: true, plants: [] }, 200, { "Set-Cookie": `JSESSIONID=S${logins}-n1; Path=/WManage; HttpOnly` });
     }
+    if (path.startsWith("/web/maintain/remoteSet/")) wrote = true;
     if (!cookie?.startsWith("JSESSIONID=")) return json({ success: false, msg: "UNLOGIN_ERROR", msgCode: 102 }, 401);
     if (expire > 0) {
       expire--;
@@ -129,6 +132,7 @@ export function fakeEg4(opts: FakeOptions = {}) {
           ],
         });
       case "/web/maintain/remoteRead/read": {
+        if (state.failReadsAfterWrite && wrote) return json({ success: false, msg: "DEVICE_TIMEOUT" });
         const start = Number(form.get("startRegister"));
         // Spread keys across blocks to prove the reader merges them.
         const keys = Object.keys(settings);
@@ -179,7 +183,9 @@ export function fakeEg4(opts: FakeOptions = {}) {
     }
   }) as typeof fetch;
 
-  return { fetchImpl, calls, settings, logins: () => logins };
+  const out = { fetchImpl, calls, settings, logins: () => logins, failReadsAfterWrite: false };
+  state = out;
+  return out;
 }
 
 /** One sample in EG4's dayMultiLine shape. gridPower negative = import; batteryDischarging negative = charging. */

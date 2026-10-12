@@ -15,7 +15,10 @@ const div = (v: unknown, d: number): number | null => {
  * EG4 sends voltages ×10, frequency ×100, cell mV, cell temps ×10, energy in 0.1 kWh.
  */
 export function decodeStatus(runtime: Json, battery: Json | null): Json {
-  const batPower = num(runtime.batPower); // negative = discharging
+  // Prefer the explicit charge/discharge figures; fall back to batPower (negative = discharging).
+  const pChg = num(runtime.pCharge);
+  const pDis = num(runtime.pDisCharge);
+  const batPower = pChg !== null && pDis !== null ? pChg - pDis : num(runtime.batPower);
   const out: Json = {
     serialNum: runtime.serialNum,
     deviceTime: runtime.deviceTime,

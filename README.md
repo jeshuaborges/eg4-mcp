@@ -44,9 +44,15 @@ Claude ──Bearer─▶ /mcp ──▶ tools ──▶ cached EG4 session cook
 1. **Preview** (default, `apply` omitted) reads the inverter and returns current vs new values, blocking errors and warnings.
    - Errors block the change: off-grid cutoff above on-grid, AC charge together with battery backup mode, or forced discharge together with export PV only.
    - Warnings flag a SOC cutoff while the control mode is volt, high-impact settings, and switching to closed-loop lithium without a BMS cable.
-2. **Apply** (`apply: true`) writes in a safe order:
-   - battery type and brand first, then the control mode, then the cutoff pair ordered so off ≤ on at every step, then switches turned off before others turn on.
-   - It stops at the first refusal, reads the inverter back, and returns `verification` per setting plus an `undo` map of previous values.
+2. **Apply** (`apply: true`) writes in an order chosen so that if EG4 refuses one write, the inverter is left no worse off:
+   - switches turned **off** first
+   - battery type and brand
+   - the cut-off pairs, ordered so off ≤ on at every step, *before* the control mode that activates them
+   - other values and time windows
+   - the charge/discharge control mode
+   - switches turned **on** last
+   
+   It stops at the first refusal and reads the inverter back. The response says `applied: all | partial | none` with a one-line `headline`, a per-setting `status` (written, already_set, rejected, error, not_attempted) and a `verified` flag, plus an `undo` map of what changed. If the read-back fails after writes, the response still reports what landed.
 
 Only settings in `src/eg4/settings.ts` can be changed. Grid-compliance (voltage/frequency trip), CT/meter, firmware and reset parameters are deliberately excluded.
 

@@ -328,39 +328,69 @@ export function buildServer(env: Env, props: GrantProps, fetchImpl?: typeof fetc
           }
         }
 
-        const after = await readSettings(d.serialNum);
+        const statusOf = (key: string) => String(results.find((r) => r.setting === key)?.status ?? "not_attempted");
+        const landed = ordered.filter((w) => ["written", "already_set"].includes(statusOf(w.setting.key)));
+        const stopped = results.find((r) => r.status === "rejected" || r.status === "error");
+        const applied = !stopped ? "all" : landed.some((w) => statusOf(w.setting.key) === "written") ? "partial" : "none";
+
+        // Writes may already have landed, so a failed read-back must not hide them.
+        let after: Flat | null = null;
+        let readBackError: string | undefined;
+        try {
+          after = await readSettings(d.serialNum);
+        } catch (err) {
+          readBackError = (err as Error).message;
+        }
         const verification = ordered.map((w) => {
-          const now = currentValue(w.setting, after);
-          return { setting: w.setting.key, requested: w.value, now: now ?? null, verified: sameValue(now, w.value) };
+          const now = after ? currentValue(w.setting, after) : undefined;
+          return {
+            setting: w.setting.key,
+            status: statusOf(w.setting.key),
+            requested: w.value,
+            now: after ? (now ?? null) : "unavailable",
+            verified: after ? sameValue(now, w.value) : null,
+          };
         });
-        const entry = {
-          at: new Date().toISOString(),
-          serialNum: d.serialNum,
-          changes: verification.map((v) => ({
-            setting: v.setting,
-            from: rows.find((r) => r.setting === v.setting)?.current ?? null,
-            to: v.requested,
-            verified: v.verified,
-            status: results.find((r) => r.setting === v.setting)?.status ?? "not_attempted",
-          })),
-        };
         try {
           const key = await auditKey();
           const prev = JSON.parse((await env.OAUTH_KV.get(key)) ?? "[]") as unknown[];
+          const entry = {
+            at: new Date().toISOString(),
+            serialNum: d.serialNum,
+            applied,
+            changes: verification.map((v) => ({ setting: v.setting, from: rows.find((r) => r.setting === v.setting)?.current ?? null, to: v.requested, status: v.status, verified: v.verified })),
+          };
           await env.OAUTH_KV.put(key, JSON.stringify([entry, ...prev].slice(0, AUDIT_KEEP)));
         } catch {
           /* audit is best-effort */
         }
-        const allVerified = verification.every((v) => v.verified);
+
+        const highRiskLanded = landed.filter((w) => w.setting.risk === "high" && statusOf(w.setting.key) === "written").map((w) => w.setting.key);
+        const headline =
+          applied === "all"
+            ? after
+              ? verification.every((v) => v.verified)
+                ? "All changes applied and verified."
+                : "All writes were accepted, but some settings read back different. See verification."
+              : "All writes were accepted, but the read-back failed. Run eg4_get_settings to confirm."
+            : applied === "partial"
+              ? `Stopped at ${stopped!.setting} (${stopped!.status}: ${stopped!.message}). Earlier changes DID land; later ones were not attempted.` +
+                (highRiskLanded.length ? ` High-impact changes now in effect: ${highRiskLanded.join(", ")}. Decide with the user whether to finish or undo.` : "")
+              : `Nothing changed: ${stopped!.setting} was ${stopped!.status} (${stopped!.message}).`;
+        const undo = Object.fromEntries(
+          rows.filter((r) => r.current !== null && !r.unchanged && statusOf(r.setting) === "written").map((r) => [r.setting, r.current]),
+        );
         return {
           serialNum: d.serialNum,
           mode: "apply",
-          applied: true,
-          all_verified: allVerified,
+          applied,
+          headline,
+          all_verified: after ? verification.every((v) => v.verified) : null,
+          ...(readBackError ? { read_back_error: readBackError } : {}),
           results,
           verification,
           warnings,
-          undo: Object.fromEntries(rows.filter((r) => r.current !== null && !r.unchanged).map((r) => [r.setting, r.current])),
+          undo,
         };
       }),
   );

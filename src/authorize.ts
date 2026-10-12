@@ -54,7 +54,14 @@ export async function handleAuthorize(request: Request, env: Env): Promise<Respo
   if (parsed instanceof Response) return parsed;
   const client = await env.OAUTH_PROVIDER.lookupClient(parsed.clientId);
   if (!client) return page({ title: "Can't connect", body: `<p class="error">Unknown application.</p>` }, 400);
-  const clientName = client.clientName || "Claude";
+  // Clients name themselves at registration, so show where the grant will be sent too.
+  let redirectHost = "";
+  try {
+    redirectHost = new URL(parsed.redirectUri).host;
+  } catch {
+    /* leave blank */
+  }
+  const clientName = `${client.clientName || "An application"}${redirectHost ? ` (${redirectHost})` : ""}`;
 
   if (request.method === "GET") return renderForm(request, clientName, {});
   if (request.method !== "POST") return new Response("Method not allowed", { status: 405 });

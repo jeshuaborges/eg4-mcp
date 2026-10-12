@@ -120,8 +120,13 @@ export class Eg4Client {
     return `eg4mcp:session:${await this.hash()}`;
   }
 
-  /** Returns a cached session cookie, signing in only when there isn't one. */
-  async session(force = false): Promise<string> {
+  /**
+   * Returns a cached session cookie, signing in only when there isn't one.
+   * `rejected` is the cookie EG4 just refused: forces a fresh sign-in unless
+   * another request has already replaced it.
+   */
+  async session(rejected?: string): Promise<string> {
+    const force = rejected !== undefined;
     const kv = this.env.OAUTH_KV;
     const key = await this.cacheKey();
     const h = await this.hash();
@@ -133,7 +138,18 @@ export class Eg4Client {
         if (cookie) return cookie;
       }
     } else {
+      // A parallel request may have signed in already; use its cookie.
+      const sealed = await kv.get(key);
+      const fresh = sealed ? await open(this.env.EG4_CACHE_KEY, sealed, key) : null;
+      if (fresh && fresh !== rejected) return fresh;
       const forcedKey = `eg4mcp:forced:${h}`;
+      // Another request is signing in right now: give it a moment and use its cookie.
+      for (let i = 0; i < 3 && (await kv.get(forcedKey)); i++) {
+        await new Promise((r) => setTimeout(r, 400));
+        const s2 = await kv.get(key);
+        const c2 = s2 ? await open(this.env.EG4_CACHE_KEY, s2, key) : null;
+        if (c2 && c2 !== rejected) return c2;
+      }
       if (await kv.get(forcedKey)) {
         throw new Eg4Error(
           "EG4 keeps rejecting this connection's session. Wait a minute and retry; if it persists, reconnect the EG4 connector.",
@@ -205,10 +221,10 @@ export class Eg4Client {
       return { res, body };
     };
 
-    let { res, body } = await send(await this.session());
+    const cookie = await this.session();
+    let { res, body } = await send(cookie);
     if (isUnauthenticated(res, body)) {
-      await this.env.OAUTH_KV.delete(await this.cacheKey());
-      ({ res, body } = await send(await this.session(true)));
+      ({ res, body } = await send(await this.session(cookie)));
       if (isUnauthenticated(res, body)) throw new Eg4Error("EG4 rejected the session right after signing in.", "auth", res.status);
     }
 
