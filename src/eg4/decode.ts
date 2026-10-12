@@ -37,7 +37,6 @@ export function decodeStatus(runtime: Json, battery: Json | null): Json {
       type: runtime.batteryType,
       modules: num(runtime.batParallelNum),
       capacity_ah: num(runtime.batCapacity),
-      temperature_c: num(runtime.tBat),
       bms: {
         charge_allowed: runtime.bmsCharge,
         discharge_allowed: runtime.bmsDischarge,
